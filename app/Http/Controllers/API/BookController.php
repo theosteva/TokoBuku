@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\Book;
 use OpenApi\Annotations as OA;
+use App\Http\Controllers\CartController;
 
 /**
  * Class BookController.
@@ -153,7 +154,7 @@ class BookController extends Controller
      *             ref="#/components/schemas/Book",
      *             example={"title": "Eating Clean", "author": "Inge Tumiwa-Bachrens", "publisher": "Kawan Pustaka", "publication_year": "2016", 
      *                      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/book/1482170055i/33511107.jpg", 
-     *                      "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu ‘sehat’ bagi tubuh kita.", 
+     *                      "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu 'sehat' bagi tubuh kita.", 
      *                      "price": 85000}
      *         ),
      *     ),
@@ -214,11 +215,18 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = Book::find($id);
-        if(!$book){
-            throw new HttpException(404, 'Item not found');
+        try {
+            $book = Book::findOrFail($id);
+            if (request()->ajax() || request()->wantsJson()) {
+                return response()->json($book);
+            }
+            return view('pages.pdp', compact('book'));
+        } catch (\Exception $e) {
+            if (request()->ajax() || request()->wantsJson()) {
+                return response()->json(['error' => 'Book not found'], 404);
+            }
+            return redirect()->route('error.not-found')->with('message', 'Buku tidak ditemukan');
         }
-        return $book;
     }
 
     /**
@@ -259,7 +267,7 @@ class BookController extends Controller
      *             ref="#/components/schemas/Book",
      *             example={"title": "Eating Clean", "author": "Inge Tumiwa-Bachrens", "publisher": "Kawan Pustaka", "publication_year": "2016", 
      *                      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/book/1482170055i/33511107.jpg", 
-     *                      "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu ‘sehat’ bagi tubuh kita.", 
+     *                      "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu 'sehat' bagi tubuh kita.", 
      *                      "price": 85000}
      *         ),
      *     ),

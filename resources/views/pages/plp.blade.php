@@ -1,7 +1,7 @@
 @extends('layouts.app-public')
 @section('title', 'Shop')
 @section('content')
-<div class="site-wrapper-reveal">
+<div class="site-wrapper-reveal bg-light">
     <!-- Product Area Start -->
     <div class="product-wrapper section-space--ptb_90 border-bottom pb-5 mb-5">
         <div class="container">
@@ -139,6 +139,8 @@
 @endsection
 @section('addition_script')
     <script src="{{asset('pages/js/plp.js')}}"></script>
+
+    
 @endsection
 
 

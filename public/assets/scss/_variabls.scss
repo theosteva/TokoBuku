@@ -12,8 +12,8 @@ $transition--default: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 // Font Family
 $font-family-name: 'Roboto', sans-serif;
 $heading-font-family-name: 'Roboto', sans-serif;
-$font-family-two: 'Roboto', sans-serif;
-$font-family-three: 'Roboto', sans-serif;
+$font-family-two: 'Prata', serif;
+$font-family-three: 'Libre Baskerville', serif;;
 $font-icon-default: 'Linearicons';
 
 // Colors ---------------
@@ -116,5 +116,6 @@ $large-mobile:'only screen and (max-width: 767px)';
 $small-mobile: 'only screen and (max-width: 575px)';
 $extra-small-mobile: 'only screen and (max-width: 479px)';
 
-
+$font-family-sans-serif: 'Roboto', sans-serif;
+$font-family-base: $font-family-sans-serif;
 

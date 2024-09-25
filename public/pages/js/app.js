@@ -4,9 +4,7 @@ const baseUrl = window.location.origin;
 const apiHeaders = {
     headers: {
         "Accept": "*/*",
-        "Access-Control-Allow-Origin": "*",
-        // "Content-Type": "application/json",
-        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*"
     }
 };
 
@@ -40,32 +38,73 @@ $("#logout-btn").on('click', function(e) {
 
     axios.post(url, {}, apiHeaders)
     .then(function (response) {
-        console.log('[DATA] response..',response.data);
-        document.cookie = 'ue=';
-        document.cookie = 'ut=';
+        console.log('[DATA] response..', response.data);
+        document.cookie = 'ue=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'ut=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "info",
-            title: "Logout successfully..",
+            title: "Logout berhasil..",
             showConfirmButton: false,
             timer: 1500
         });
         setTimeout(function() {
-            window.location=baseUrl
-        }, 1500)
+            updateUserMenu();
+            window.location.reload();
+        }, 1500);
     })
     .catch(function (error) {
-        console.log('[ERROR] response..',error)
+        console.log('[ERROR] response..', error);
         Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "warning",
-            title: "Failed to logout",
-            html: error.response?error.response.data.message:error.message,
+            title: "Gagal logout",
+            html: error.response ? error.response.data.message : error.message,
             showConfirmButton: false,
             timer: 5000
         });
     });
 });
+
+function updateUserMenu() {
+    const userMenu = document.querySelector('.user-menu');
+    if (userMenu) {
+        if (getCookie('ut')) {
+            userMenu.innerHTML = `
+                <div class="dropdown">
+                    <a class="dropdown-toggle btn btn-outline-primary btn-sm" href="#" role="button" data-bs-toggle="dropdown">
+                        ${ucwords(substr(getCookie('ue'), 0, 3))}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#my-profile">Profil Saya</a></li>
+                        <li><a class="dropdown-item" href="#" id="logout-btn">Logout</a></li>
+                    </ul>
+                </div>
+            `;
+        } else {
+            userMenu.innerHTML = `
+                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#authModal">
+                    Login
+                </a>
+            `;
+        }
+    }
+}
+
+function getCookie(name) {
+    let value = `; ${document.cookie}`;
+    let parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+function ucwords(str) {
+    return str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+        return letter.toUpperCase();
+    });
+}
+
+// Panggil updateUserMenu saat halaman dimuat
+document.addEventListener('DOMContentLoaded', updateUserMenu);
 
 $("#form-login-btn").on('click', function(e) {
     const form = document.getElementById('form-login');
@@ -77,14 +116,14 @@ $("#form-login-btn").on('click', function(e) {
         $('#form-login').hide();
         let url = baseUrl+'/api/user/login';
         let formData  = new FormData(form);
-
         axios.post(url, formData, apiHeaders)
         .then(function (response) {
-            console.log('[DATA] response..',response.data);
+            console.log('[DATA] response..', response.data);
             document.cookie = 'ue='+formData.get('email');
             document.cookie = 'ut='+response.data.token;
+            localStorage.setItem('auth_token', response.data.token); // Simpan token
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "Login successfully!",
                 showConfirmButton: false,
@@ -120,7 +159,7 @@ $("#form-register-btn").on('click', function(e) {
             document.cookie = 'ue='+formData.get('email');
             document.cookie = 'ut='+response.data.token;
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "Registered successfully and logged in automatically",
                 showConfirmButton: false,

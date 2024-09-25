@@ -1,3 +1,12 @@
+const baseUrl = window.location.origin;
+const apiHeaders = {
+    headers: {
+        "Accept": "*/*",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "multipart/form-data",
+        "Authorization": `Bearer ${localStorage.getItem('auth_token')}` // Tambahkan token ke header
+    }
+};
 let id_el_list = "#product-preview";
 
 function getData(){
@@ -11,6 +20,14 @@ function getData(){
     axios.get(url,{params:payload},apiHeaders)
     .then(function (response) {
         console.log('[DATA] response..',response.data);
+        
+        // Tambahkan kode berikut setelah mendapatkan respons
+        $('.single-hero-slider-7').css({
+            'background-image': 'url(https://thumbs.dreamstime.com/b/crumpled-old-paper-background-texture-brown-158187253.jpg)',
+            'background-size': 'cover',
+            'background-position': 'center'
+        });
+
         let template = ``;
         (response.data.products).forEach((item) => {
             template += `
@@ -20,13 +37,13 @@ function getData(){
                         <div class="col-lg-12">
                             <div class="hero-content-wrap">
                                 <div class="hero-text-7 mt-lg-5">
-                                    <h6 class="mb-20">
-                                        Latest from WTTW
+                                    <h6 class="mb-20" style="color: black;">
+                                        Latest from Us
                                     </h6>
                                     <h1>`+breakWord(item.title)+`</h1>
 
                                     <div class="button-box section-space--mt_60">
-                                        <a href="#" class="text-btn-normal font-weight--reguler font-lg-p">Discover now</a>
+                                        <a href="#" class="text-btn-normal font-weight--reguler font-lg-p discover-now-btn">Discover now</a>
                                     </div>
                                 </div>
                                 <div class="inner-images">

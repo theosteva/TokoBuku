@@ -110,7 +110,7 @@ function getData(toPage=1){
         console.log('[ERROR] response..',error);
         if(error.code == "ERR_BAD_REQUEST"){
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "warning",
                 title: "Yaah...",
                 html: "Produk-produk yang Anda cari tidak ditemukan",

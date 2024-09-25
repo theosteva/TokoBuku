@@ -45,6 +45,7 @@
           box-sizing: border-box;
 }
 
+
 html, body {
   height: 100%;
 }
@@ -333,6 +334,7 @@ select {
   background-color: #f8f8f8;
   -moz-appearance: none;
   -webkit-appearance: none;
+  appearance: none;
 }
 select:focus {
   background: #f8f8f8 url("../images/icons/selector-icon.webp") no-repeat center right 20px !important;
@@ -499,11 +501,6 @@ select:focus {
   background-color: #dcb14a;
 }
 
-form {
-  /* FF 4-18 */
-  /* FF 19+ */
-  /* IE 10+ */
-}
 form input:focus::-webkit-input-placeholder {
   color: transparent;
 }
@@ -767,10 +764,7 @@ input[type=checkbox] {
 /*============================================
 =           02. Section Spacing Css          =
 =============================================*/
-.section-space {
-  /* Section Padding Css */
-  /* Section Margin Css */
-}
+
 .section-space--ptb_120 {
   padding-top: 120px;
   padding-bottom: 120px;
@@ -2774,7 +2768,6 @@ input[type=checkbox] {
   height: 100%;
   float: right;
   cursor: default;
-  background: #ffffff;
   -webkit-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
   -o-transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -2808,9 +2801,7 @@ input[type=checkbox] {
 .mobile-menu-overlay__body {
   padding: 20px 40px 100px;
 }
-.mobile-menu-overlay__body .offcanvas-navigation {
-  /* onepage style */
-}
+
 .mobile-menu-overlay__body .offcanvas-navigation > ul > li > a {
   display: block;
   color: #000000;
@@ -3363,7 +3354,7 @@ input[type=checkbox] {
 .single-hero-slider-five,
 .single-hero-slider-nine {
   height: 1100px;
-  background: #f1f1f1;
+
   display: -webkit-box !important;
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
@@ -3530,7 +3521,6 @@ input[type=checkbox] {
 
 .single-hero-slider-nine {
   height: 880px;
-  background: #f1f1f1;
   display: -webkit-box !important;
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
@@ -3631,7 +3621,6 @@ input[type=checkbox] {
 
 .single-hero-slider-7, .single-hero-slider-four {
   height: 600px;
-  background: #f1f1f1;
   display: -webkit-box !important;
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
@@ -3740,7 +3729,6 @@ input[type=checkbox] {
 
 .single-hero-slider-four {
   height: 780px;
-  background: #f1f1f1;
   display: -webkit-box !important;
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
@@ -3904,7 +3892,6 @@ input[type=checkbox] {
 
 .single-hero-slider-10 {
   height: 900px;
-  background: #f1f1f1;
   display: -webkit-box !important;
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
@@ -4127,7 +4114,6 @@ input[type=checkbox] {
 
 .single-hero-slider-13 {
   height: 600px;
-  background: #f1f1f1;
   display: -webkit-box !important;
   display: -webkit-flex !important;
   display: -ms-flexbox !important;
@@ -4878,7 +4864,7 @@ input[type=checkbox] {
   height: 30px;
   width: 30px;
   line-height: 30px;
-  background: #f1f1f1;
+  background: #ffffff;
   border-radius: 50%;
   border: 1px solid transparent;
   text-align: center;
@@ -4896,7 +4882,7 @@ input[type=checkbox] {
   height: 30px;
   width: 30px;
   line-height: 30px;
-  background: #f1f1f1;
+  background: #ffffff;
   border-radius: 50%;
   border: 1px solid transparent;
   text-align: center;
@@ -5185,7 +5171,6 @@ input[type=checkbox] {
 .product-filter-wrapper .product-filter .product-tags ul li {
   width: 50%;
   display: inline-block;
-  float: left;
 }
 .product-filter-wrapper .product-filter .fliter-size ul li {
   display: inline-block;
@@ -5800,6 +5785,7 @@ h3.cart-page-title {
   border: 1px solid #e6e6e6;
   background: transparent;
   -moz-appearance: none;
+  appearance: none;
   height: 50px;
   padding: 2px 20px;
   color: #262626;
