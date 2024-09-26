@@ -1,11 +1,20 @@
 @extends('layouts.app-public')
-
+@section('title', 'Payment')
+@section('additional_styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+<style>
+    /* ... (gaya CSS yang sudah ada) ... */
+    .swal2-popup {
+        font-family: 'Arial', sans-serif;
+    }
+</style>
+@endsection
 @section('content')
-<div class="container py-5">
+<div class="container py-5" >
     <div class="row justify-content-center">
-        <div class="col-md-10"> <!-- Memperlebar kolom untuk mengakomodasi lebih banyak konten -->
+        <div class="col-md-10"> <!-- Widened column to accommodate more content -->
             <div class="card">
-                <div class="card-header bg-black text-white">Pembayaran untuk Buku</div>
+                <div class="card-header bg-black text-white">Payment for Book</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
@@ -13,16 +22,16 @@
                         </div>
                         <div class="col-md-8">
                             <h2>{{ $book->title }}</h2>
-                            <p class="text-muted">Penulis: {{ $book->author }}</p>
-                            <h4 class="text-primary">Harga: Rp {{ number_format($book->price, 0, ',', '.') }}</h4>
+                            <p class="text-muted">Author: {{ $book->author }}</p>
+                            <h4 class="text-primary">Price: Rp {{ number_format($book->price, 2, '.', ',') }}</h4>
                             <hr>
-                            <h5>Deskripsi Buku:</h5>
-                            <p>{{ $book->description }}</p> <!-- Menambahkan deskripsi buku -->
+                            <h5>Book Description:</h5>
+                            <p>{{ $book->description }}</p> <!-- Adding book description -->
                         </div>
                     </div>
                     <hr>
                     <div class="text-center mt-4">
-                        <button id="pay-button" class="btn btn-primary btn-lg">Bayar Sekarang</button>
+                        <button id="pay-button" class="btn btn-primary btn-lg">Pay Now</button>
                     </div>
                 </div>
             </div>
@@ -33,24 +42,57 @@
 
 @section('addition_script')
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script type="text/javascript">
     var payButton = document.getElementById('pay-button');
     payButton.addEventListener('click', function () {
         window.snap.pay('{{ $snap_token }}', {
             onSuccess: function(result) {
-                alert("Pembayaran berhasil!");
+                Swal.fire({
+                    title: 'Payment Successful!',
+                    text: 'Your transaction has been completed successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    background: '#ffffff',
+                    iconColor: '#28a745',
+                    confirmButtonColor: '#007bff'
+                });
                 console.log(result);
             },
             onPending: function(result) {
-                alert("Menunggu pembayaran Anda!");
+                Swal.fire({
+                    title: 'Payment Pending',
+                    text: 'We are still waiting for your payment to be completed.',
+                    icon: 'info',
+                    confirmButtonText: 'I\'ll complete it soon',
+                    background: '#ffffff',
+                    iconColor: '#17a2b8',
+                    confirmButtonColor: '#007bff'
+                });
                 console.log(result);
             },
             onError: function(result) {
-                alert("Pembayaran gagal!");
+                Swal.fire({
+                    title: 'Payment Failed!',
+                    text: 'There was an error processing your payment. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'Try Again',
+                    background: '#ffffff',
+                    iconColor: '#dc3545',
+                    confirmButtonColor: '#007bff'
+                });
                 console.log(result);
             },
             onClose: function() {
-                alert('Anda menutup popup tanpa menyelesaikan pembayaran');
+                Swal.fire({
+                    title: 'Payment Cancelled',
+                    text: 'You closed the payment window without completing the transaction.',
+                    icon: 'warning',
+                    confirmButtonText: 'Got it',
+                    background: '#ffffff',
+                    iconColor: '#ffc107',
+                    confirmButtonColor: '#007bff'
+                });
             }
         });
     });

@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendor/linearicons.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendor/fontawesome-all.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/animation.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/slick.min.css')}}">
         <link rel="stylesheet" type="text/css" href ="{{asset('assets/css/plugins/magnific-popup.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/plugins/easyzoom.css')}}">
@@ -78,6 +79,7 @@
         <script src="{{asset('assets/js/main.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="{{asset('pages/js/app.js')}}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         @yield('addition_script')
         <!-- END: JS Assets-->
     </body>

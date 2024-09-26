@@ -2,10 +2,9 @@ console.log('____app js');
 
 const baseUrl = window.location.origin;
 const apiHeaders = {
-    headers: {
-        "Accept": "*/*",
-        "Access-Control-Allow-Origin": "*"
-    }
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
 };
 
 function randomIntFromInterval(min, max) { // min and max included 
@@ -33,18 +32,39 @@ function getCookie (name) {
 }
 
 $("#logout-btn").on('click', function(e) {
-    apiHeaders['headers']['Authorization'] = 'Bearer '+getCookie('ut');
-    let url = baseUrl+'/api/user/logout';
+    e.preventDefault(); // Mencegah perilaku default dari tombol
 
-    axios.post(url, {}, apiHeaders)
+    let url = baseUrl+'/api/user/logout';
+    let token = getCookie('ut');
+
+    if (!token) {
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error",
+            html: "Token tidak ditemukan. Silakan login kembali.",
+            showConfirmButton: false,
+            timer: 3000
+        });
+        return;
+    }
+
+    axios.post(url, {}, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
     .then(function (response) {
         console.log('[DATA] response..', response.data);
         document.cookie = 'ue=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         document.cookie = 'ut=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        localStorage.removeItem('auth_token'); // Hapus token dari localStorage juga
         Swal.fire({
             position: "center",
-            icon: "info",
-            title: "Logout berhasil..",
+            icon: "success",
+            title: "Logout berhasil",
             showConfirmButton: false,
             timer: 1500
         });
@@ -57,37 +77,28 @@ $("#logout-btn").on('click', function(e) {
         console.log('[ERROR] response..', error);
         Swal.fire({
             position: "center",
-            icon: "warning",
+            icon: "error",
             title: "Gagal logout",
             html: error.response ? error.response.data.message : error.message,
             showConfirmButton: false,
-            timer: 5000
+            timer: 3000
         });
     });
 });
 
 function updateUserMenu() {
-    const userMenu = document.querySelector('.user-menu');
-    if (userMenu) {
-        if (getCookie('ut')) {
-            userMenu.innerHTML = `
-                <div class="dropdown">
-                    <a class="dropdown-toggle btn btn-outline-primary btn-sm" href="#" role="button" data-bs-toggle="dropdown">
-                        ${ucwords(substr(getCookie('ue'), 0, 3))}
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#my-profile">Profil Saya</a></li>
-                        <li><a class="dropdown-item" href="#" id="logout-btn">Logout</a></li>
-                    </ul>
-                </div>
-            `;
-        } else {
-            userMenu.innerHTML = `
-                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#authModal">
-                    Login
-                </a>
-            `;
-        }
+    const userEmail = getCookie('ue');
+    if (userEmail) {
+        const shortenedEmail = userEmail.length > 10 ? userEmail.substring(0, 10) + '...' : userEmail;
+        $('#user-menu').html(`
+            <li><a href="${baseUrl}/my-profile">${shortenedEmail}</a></li>
+            <li><a href="#" id="logout-btn">Logout</a></li>
+        `);
+    } else {
+        $('#user-menu').html(`
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a></li>
+        `);
     }
 }
 
@@ -116,6 +127,7 @@ $("#form-login-btn").on('click', function(e) {
         $('#form-login').hide();
         let url = baseUrl+'/api/user/login';
         let formData  = new FormData(form);
+
         axios.post(url, formData, apiHeaders)
         .then(function (response) {
             console.log('[DATA] response..', response.data);

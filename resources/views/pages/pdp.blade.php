@@ -1,5 +1,5 @@
 @extends('layouts.app-public')
-@section('title', 'Product Detail')
+@section('title', 'Book Detail')
 @section('content')
 <div class="site-wrapper-reveal">
 
@@ -57,7 +57,13 @@
                         <h5 class="font-weight--reguler mb-10" id="product-name"></h5>
                         <div class="quickview-ratting-review mb-10">
                             <div class="quickview-ratting-wrap">
-                                <div class="quickview-ratting" id="product-review-stars"></div>
+                                <div class="quickview-ratting" id="product-review-stars">
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star-empty"></i>
+                                </div>
                                 <a href="#" id="product-review-body-count"></a>
                             </div>
                         </div>
@@ -84,8 +90,15 @@
                                           Purchase Now
                                          </a>
                                     </div>
-                                    <div class="quickview-wishlist button">
-                                        <a title="Add to wishlist" href="#"><i class="icon-heart"></i></a>
+                                    <div class="quickview-wishlist button" title="Add to wishlist">
+                                        <a href="#" id="add-to-wishlist" class="btn btn-outline-dark">
+                                            <i class="icon-heart"></i>
+                                        </a>
+                                    </div>
+                                    <div class="quickview-wishlist button" title="Add to cart">
+                                        <a href="#" id="add-to-wishlist22" class="btn btn-outline-dark">
+                                            <i class="icon-bag2 icon-large"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -142,19 +155,3 @@
 @section('addition_script')
     <script src="{{asset('pages/js/pdp.js')}}"></script>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

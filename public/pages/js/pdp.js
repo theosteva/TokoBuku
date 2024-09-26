@@ -73,3 +73,45 @@ function getDataByWindowUrlKey(){
 $(function () {
   getDataByWindowUrlKey();
 });
+
+// Add this at the end of the file
+$('#add-to-wishlist').on('click', function(e) {
+    e.preventDefault();
+    let bookId = window.location.pathname.split('/').pop();
+    
+    console.log('Attempting to add book to wishlist. Book ID:', bookId);
+    
+    $.ajax({
+        url: `${baseUrl}/wishlist/add`,
+        method: 'POST',
+        headers: apiHeaders,
+        data: JSON.stringify({ book_id: bookId }),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(response) {
+            console.log('Wishlist add success:', response);
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: response.message,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error adding book to wishlist:', xhr.responseText);
+            let errorMessage = "Error adding to wishlist";
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+            }
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: errorMessage,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
+});
+

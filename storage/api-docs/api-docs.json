@@ -1,10 +1,10 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My Rest API",
-        "description": "Laravel project to practice developing Rest API with L5 Swagger OpenApi",
+        "title": "Admin Control Panel",
+        "description": "For Admin Only",
         "contact": {
-            "name": "Theodorus",
+            "name": "Developer : Theodorus",
             "email": "theostevsetiawan@gmail.com"
         },
         "version": "1.0",
@@ -217,24 +217,49 @@
                 "tags": [
                     "book"
                 ],
-                "summary": "Store a newly created item",
+                "summary": "Store a newly created book",
                 "operationId": "store",
                 "requestBody": {
-                    "description": "Request body description",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/Book"
-                            },
-                            "example": {
-                                "title": "Eating Clean",
-                                "author": "Inge Tumiwa-Bachrens",
-                                "publisher": "Kawan Pustaka",
-                                "publication_year": "2016",
-                                "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/book/1482170055i/33511107.jpg",
-                                "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu ‘sehat’ bagi tubuh kita.",
-                                "price": 85000
+                                "required": [
+                                    "title",
+                                    "author"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Book title",
+                                        "type": "string"
+                                    },
+                                    "author": {
+                                        "description": "Book author",
+                                        "type": "string"
+                                    },
+                                    "publisher": {
+                                        "description": "Book publisher",
+                                        "type": "string"
+                                    },
+                                    "publication_year": {
+                                        "description": "Year of publication",
+                                        "type": "integer"
+                                    },
+                                    "cover": {
+                                        "description": "URL of book cover image",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Book description",
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "description": "Book price",
+                                        "type": "number",
+                                        "format": "float"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -249,10 +274,12 @@
                         }
                     },
                     "201": {
-                        "description": "Successful",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
                             }
                         }
                     }
@@ -343,7 +370,7 @@
                                 "publisher": "Kawan Pustaka",
                                 "publication_year": "2016",
                                 "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/book/1482170055i/33511107.jpg",
-                                "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu ‘sehat’ bagi tubuh kita.",
+                                "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu 'sehat' bagi tubuh kita.",
                                 "price": 85000
                             }
                         }

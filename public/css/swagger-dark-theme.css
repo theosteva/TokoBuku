@@ -1,0 +1,39 @@
+body.swagger-ui {
+    background-color: #2c3e50 !important;
+    color: #ecf0f1 !important;
+}
+
+.swagger-ui .topbar {
+    background-color: #34495e !important;
+}
+
+.swagger-ui .topbar a span {
+    color: #ecf0f1 !important;
+}
+
+.swagger-ui .opblock-summary {
+    background-color: #34495e !important;
+    color: #ecf0f1 !important;
+}
+
+.swagger-ui .opblock {
+    background-color: #2c3e50 !important;
+}
+
+.swagger-ui .opblock-summary-method {
+    color: #ecf0f1 !important;
+}
+
+.swagger-ui .scheme-container {
+    background-color: #34495e !important;
+}
+
+.swagger-ui .parameter__name,
+.swagger-ui .parameter__type {
+    color: #ecf0f1 !important;
+}
+
+.swagger-ui input {
+    background-color: #34495e !important;
+    color: #ecf0f1 !important;
+}

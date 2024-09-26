@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BookController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\API\ContactController;
 
 Route::prefix('user')->group(function () {
     Route::get('/users', function (Request $request) {
@@ -31,3 +31,4 @@ Route::resource('book', BookController::class, [
 ])->middleware(['auth:api']);
 
 Route::get('/book/{id}', [BookController::class, 'show']);
+

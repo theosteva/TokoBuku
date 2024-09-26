@@ -16,7 +16,6 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('plp') }}">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -24,7 +23,7 @@
             <!-- User Actions -->
             <div class="col-lg-3 col-md-4 col-6">
                 <div class="header-actions d-flex justify-content-end align-items-center">
-                    <a href="#wishlist" class="action-item me-3 d-none d-md-inline-block" title="Wishlist">
+                    <a href="{{ route('wishlist.index') }}" class="action-item me-3 d-none d-md-inline-block" title="Wishlist">
                         <i class="icon-heart icon-large" id="wishlist-icon"></i>
                         @if(isset($_COOKIE['ut']))
                             <span class="badge bg-primary rounded-circle">3</span>
@@ -37,11 +36,11 @@
                         @endif
                     </a>
                     <div class="user-menu">
-                        @if(isset($_COOKIE['ut']))
+                        @if(isset($_COOKIE['ue']))
                             <div class="dropdown">
-                                <a class="dropdown-toggle btn btn-outline-primary btn-sm" href="#" role="button" data-bs-toggle="dropdown">
-                                    {{ ucwords(substr($_COOKIE['ue'], 0, 3)) }}
-                                </a>
+                                    <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                        Hello, {{ucwords(substr($_COOKIE['ue'], 0, 3))}}
+                                    </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="{{ route('my-profile') }}">My Profile</a></li>
                                     <li><a class="dropdown-item" href="#" id="logout-btn">Logout</a></li>
@@ -371,7 +370,7 @@
                 loadingDiv.classList.add('d-none');
                 submitBtn.disabled = false;
                 // Di sini Anda bisa menambahkan logika login yang sebenarnya
-                errorDiv.textContent = 'Login berhasil!';
+                errorDiv.textContent = 'Login gagal! Email atau Password Salah';
                 errorDiv.classList.remove('d-none', 'alert-danger');
                 errorDiv.classList.add('alert-success');
             }, 2000);

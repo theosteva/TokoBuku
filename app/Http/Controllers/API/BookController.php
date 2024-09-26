@@ -135,7 +135,7 @@ class BookController extends Controller
      * @OA\Post(
      *     path="/api/book",
      *     tags={"book"},
-     *     summary="Store a newly created item",
+     *     summary="Store a newly created book",
      *     operationId="store",
      *     @OA\Response(
      *         response=400,
@@ -144,19 +144,53 @@ class BookController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="Successful",
-     *         @OA\JsonContent()
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Book")
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Request body description",
-     *         @OA\JsonContent(
-     *             ref="#/components/schemas/Book",
-     *             example={"title": "Eating Clean", "author": "Inge Tumiwa-Bachrens", "publisher": "Kawan Pustaka", "publication_year": "2016", 
-     *                      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/book/1482170055i/33511107.jpg", 
-     *                      "description": "Menjadi sehat adalah impian semua orang. Makanan yang selama ini kita pikir sehat ternyata belum tentu 'sehat' bagi tubuh kita.", 
-     *                      "price": 85000}
-     *         ),
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"title", "author"},
+     *                 @OA\Property(
+     *                     property="title",
+     *                     type="string",
+     *                     description="Book title"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="author",
+     *                     type="string",
+     *                     description="Book author"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="publisher",
+     *                     type="string",
+     *                     description="Book publisher"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="publication_year",
+     *                     type="integer",
+     *                     description="Year of publication"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="cover",
+     *                     type="string",
+     *                     description="URL of book cover image"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="description",
+     *                     type="string",
+     *                     description="Book description"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="price",
+     *                     type="number",
+     *                     format="float",
+     *                     description="Book price"
+     *                 )
+     *             )
+     *         )
      *     ),
      *     security={{"passport_token_ready":{},"passport":{}}}
      * )
